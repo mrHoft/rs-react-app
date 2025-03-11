@@ -1,48 +1,35 @@
-import { useState } from 'react';
+import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router';
-import './App.css';
-import Page404 from './pages/404/404';
-import reactLogo from '/react.svg';
-import viteLogo from '/vite.svg';
+import { routes } from '~/pages';
+import { store } from '~/store/store.ts';
+import { Backdop } from '~/ui/backdop/backdop';
+import { Header } from '~/ui/header/header';
+import { Message } from '~/ui/message/message';
+import { Footer } from './ui/footer/footer';
 
-function PageHome() {
-  const [count, setCount] = useState(0);
-
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button className="button" onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <Header />
+      <Backdop />
+      <main className="main">
+        <Provider store={store}>{children}</Provider>
+      </main>
+      <Footer />
+      <Message />
     </>
   );
-}
+};
 
 function App() {
   return (
-    <>
-      <main className="main">
-        <Routes>
-          <Route path="/" element={<PageHome />} />
-          <Route path="details/:id" element={<h2>Page details</h2>} />
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </main>
-    </>
+    <Layout>
+      <Routes>
+        {routes.map(({ path, element }, id) => (
+          <Route key={id} path={path} element={element} />
+        ))}
+      </Routes>
+    </Layout>
   );
 }
 
