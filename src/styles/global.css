@@ -43,7 +43,9 @@ body {
 }
 
 button:focus,
-input:focus:focus {
+select:focus,
+input:focus,
+a:focus {
   outline: none;
 }
 

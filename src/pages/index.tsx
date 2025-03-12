@@ -1,4 +1,5 @@
 import { Page404 } from './404/404';
+import { PageForm1 } from './form/form1';
 import { PageHome } from './home/home';
 
 export const routes = [
@@ -10,7 +11,7 @@ export const routes = [
   {
     name: 'Uncontrolled form',
     path: '/form1',
-    element: <h2>Form 1</h2>,
+    element: <PageForm1 />,
   },
   {
     name: 'React Hook Form',

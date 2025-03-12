@@ -1,0 +1,92 @@
+.input_container {
+  position: relative;
+  min-width: 12em;
+  box-sizing: border-box;
+  padding: 0 0.6rem;
+  border-radius: 0.375rem;
+  border: 2px solid var(--color40);
+  background-color: var(--color00);
+  color: var(--color100);
+  font-size: 1rem;
+  transition:
+    background-color 0.25s linear,
+    border-color 0.25s linear;
+}
+
+.input_container.hidden {
+  display: none;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 1rem 0 0.6rem;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  font-family: var(--font);
+  font-size: 1rem;
+  -webkit-text-fill-color: var(--color100);
+}
+
+.input_container:has(.input:read-only) {
+  border-color: var(--color50);
+  background-color: var(--color00);
+}
+
+.input:read-only {
+  cursor: auto;
+  pointer-events: none;
+}
+
+.input:valid ~ .input__valid {
+  display: block;
+}
+
+.input__valid {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: none;
+  color: green;
+}
+
+.select__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0.6rem;
+  color: inherit;
+  opacity: 0.7;
+  font-size: 0.8em;
+  pointer-events: none;
+  transition: 0.3s ease all;
+}
+
+.input__placeholder {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  color: inherit;
+  opacity: 0.7;
+  pointer-events: none;
+  transition: 0.3s ease all;
+}
+
+.input:focus ~ .input__placeholder,
+.input:not(:placeholder-shown) ~ .input__placeholder {
+  top: 0;
+  font-size: 0.8em;
+}
+
+@media (hover: hover) {
+  .input_container:hover,
+  .input_container:has(.input:focus) {
+    border-color: var(--color60);
+    background-color: var(--color10);
+  }
+
+  .input_container:has(.input:read-only):hover {
+    border-color: var(--color50);
+    background-color: var(--color00);
+  }
+}
