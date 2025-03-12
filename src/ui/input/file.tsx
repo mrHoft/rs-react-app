@@ -10,7 +10,7 @@ export function InputFile({ name, accept }: { name: string; accept: string }) {
           height="1.5rem"
           fill="none"
           stroke="currentColor"
-          stroke-width="16"
+          strokeWidth="16"
         >
           <rect x="32" y="48" width="192" height="160" rx="8" />
           <circle cx="156" cy="100" r="12" />

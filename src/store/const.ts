@@ -1,4 +1,4 @@
-export const countryList = [
+export const countries = [
   'Albania',
   'Belarus',
   'Canada',
@@ -19,3 +19,5 @@ export const countryList = [
   'Ukraine',
   'United Kingdom',
 ];
+
+export const genders = ['male', 'female'];

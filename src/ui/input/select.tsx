@@ -18,7 +18,7 @@ export type TSelectProps = {
   onBlur?: (value: string) => void;
 };
 
-export const Select = React.forwardRef<HTMLSelectElement, TSelectProps>(
+const Select = React.forwardRef<HTMLSelectElement, TSelectProps>(
   ({ options, name, placeholder, defaultValue, value, required, disabled, title, onChange, onBlur }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       if (onChange) onChange(e.target.value);
@@ -49,3 +49,6 @@ export const Select = React.forwardRef<HTMLSelectElement, TSelectProps>(
     );
   }
 );
+
+Select.displayName = 'Select';
+export { Select };

@@ -1,36 +1,36 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { countryList } from './const';
+import { countries, genders } from './const';
 
 export interface FormData {
   name: string;
-  age: number;
+  age?: number;
   email: string;
   password: string;
-  passwordConfirm: string;
-  gender: string;
+  gender?: string;
   accept: boolean;
-  picture: Base64URLString;
-  country: string;
+  picture?: Base64URLString;
+  country?: string;
 }
 
 interface FormState {
-  form: FormData;
-  countryList: string[];
+  data: FormData;
+  newData: FormData;
+  countries: string[];
+  genders: string[];
 }
 
+const defaultData: FormData = {
+  name: '',
+  email: '',
+  password: '',
+  accept: false,
+};
+
 const initialState: FormState = {
-  form: {
-    name: '',
-    age: 0,
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    gender: 'male',
-    accept: false,
-    picture: '',
-    country: '',
-  },
-  countryList,
+  data: defaultData,
+  newData: defaultData,
+  countries,
+  genders,
 };
 
 export const formSlice = createSlice({
@@ -38,9 +38,12 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     formUpdate: (state, action: PayloadAction<FormData>) => {
-      state.form = action.payload;
+      state.data = action.payload;
+    },
+    formAdd: (state, action: PayloadAction<FormData>) => {
+      state.newData = action.payload;
     },
   },
 });
 
-export const { formUpdate } = formSlice.actions;
+export const { formUpdate, formAdd } = formSlice.actions;

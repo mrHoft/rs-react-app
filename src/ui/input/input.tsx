@@ -16,9 +16,10 @@ export type TInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onC
   children?: React.ReactNode;
   onChange?: (value: string) => void;
   onBlur?: (value: string) => void;
+  options?: string[];
 };
 
-export const Input = React.forwardRef<HTMLInputElement, TInputProps>(
+const Input = React.forwardRef<HTMLInputElement, TInputProps>(
   (
     {
       type,
@@ -35,6 +36,7 @@ export const Input = React.forwardRef<HTMLInputElement, TInputProps>(
       onChange,
       onBlur,
       hidden,
+      options,
     },
     ref
   ) => {
@@ -59,7 +61,7 @@ export const Input = React.forwardRef<HTMLInputElement, TInputProps>(
           id={`form_${name}`}
           placeholder=" "
           minLength={minLength}
-          autoComplete="false"
+          autoComplete={options ? 'one-time-code' : 'false'}
           defaultValue={defaultValue}
           required={required ?? false}
           disabled={disabled}
@@ -71,13 +73,24 @@ export const Input = React.forwardRef<HTMLInputElement, TInputProps>(
             if (onBlur) onBlur(e.target.value);
           }}
           hidden={hidden}
+          list={options ? `form_${name}_list` : undefined}
         />
         <label className={styles.input__placeholder} htmlFor={`form_${name}`}>
           {placeholder}
         </label>
         {pattern && <span className={styles.input__valid}>&#x2714;</span>}
         {children}
+        {options && (
+          <datalist id={`form_${name}_list`}>
+            {options.map(name => {
+              return <option key={name} value={name} />;
+            })}
+          </datalist>
+        )}
       </div>
     );
   }
 );
+
+Input.displayName = 'Input';
+export { Input };

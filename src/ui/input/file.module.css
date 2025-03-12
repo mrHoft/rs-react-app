@@ -13,10 +13,9 @@
 }
 
 .file__upload {
-  display: block;
   border-radius: 0.375rem;
   border: 2px solid var(--color40);
-  padding: 0.25rem 1rem 0;
+  padding: 6px 1rem 0;
   margin: 0.5rem 1rem 0.5rem 0;
   font-size: 1rem;
   background-color: var(--color20);
