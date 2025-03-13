@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { routes } from '~/pages';
-import { formUpdate, type FormData } from '~/store/form';
+import { formUpdate, type AppFormData } from '~/store/form';
 import type { TAppDispatch, TRootState } from '~/store/store';
 
 import styles from './home.module.css';
@@ -20,6 +20,9 @@ export function PageHome() {
   useEffect(() => {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => dispatch(formUpdate(newData)), 4000);
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, [dispatch, newData]);
 
   const getElement = (key: string, value?: string | number | boolean) => {
@@ -41,8 +44,8 @@ export function PageHome() {
       </tr>,
     ];
     Object.keys(newData).map(key => {
-      const value = newData[key as keyof FormData];
-      const isNew = data[key as keyof FormData] !== value;
+      const value = newData[key as keyof AppFormData];
+      const isNew = data[key as keyof AppFormData] !== value;
       if (key === 'picture' || value === undefined) return null;
       rows.push(
         <tr key={key}>
