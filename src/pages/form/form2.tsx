@@ -13,7 +13,7 @@ import { schema, type TField } from './schema';
 import styles from './form.module.css';
 
 export function PageForm2() {
-  const { data: savedData, countries, genders } = useSelector((state: TRootState) => state.form);
+  const { curData, countries, genders } = useSelector((state: TRootState) => state.form);
   const ref = React.useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch<TAppDispatch>();
@@ -65,13 +65,13 @@ export function PageForm2() {
 
   return (
     <form ref={ref} className={styles.form} onSubmit={e => handleSubmit(onHandleSubmit)(e)}>
-      <h2>Uncontrolled form</h2>
+      <h2>React Hook Form</h2>
       <input
         className={styles.form__input}
         type="text"
         placeholder="Name*"
         {...register('name')}
-        defaultValue={savedData.name || undefined}
+        defaultValue={curData.name || undefined}
       />
       <div className={styles.form__msg}>{getErrorMessage(['name'])}</div>
       <input
@@ -79,7 +79,7 @@ export function PageForm2() {
         {...register('age')}
         type="number"
         placeholder="Age"
-        defaultValue={savedData.age || undefined}
+        defaultValue={curData.age || undefined}
       />
       <div className={styles.form__msg}>{getErrorMessage(['age'])}</div>
       <input
@@ -87,7 +87,7 @@ export function PageForm2() {
         {...register('email')}
         type="text"
         placeholder="Email*"
-        defaultValue={savedData.email || undefined}
+        defaultValue={curData.email || undefined}
       />
       <div className={styles.form__msg}>{getErrorMessage(['email'])}</div>
       <div className={styles.form__row}>
@@ -96,18 +96,18 @@ export function PageForm2() {
           {...register('password')}
           type="text"
           placeholder="Password*"
-          defaultValue={savedData.password || undefined}
+          defaultValue={curData.password || undefined}
         />
         <input
           className={styles.form__input}
           {...register('passwordConfirm')}
           type="text"
           placeholder="Password repeat*"
-          defaultValue={savedData.password || undefined}
+          defaultValue={curData.password || undefined}
         />
       </div>
       <div className={styles.form__msg}>{getErrorMessage(['password', 'passwordConfirm'])}</div>
-      <Select name="gender" placeholder="Gender" options={genders} defaultValue={savedData.gender} />
+      <Select name="gender" placeholder="Gender" options={genders} defaultValue={curData.gender} />
       <div className={styles.form__msg} />
       <div>
         <input {...register('accept')} type="checkbox" id="accept" />
@@ -116,7 +116,7 @@ export function PageForm2() {
       <div className={styles.form__msg}>{getErrorMessage(['accept'])}</div>
       <InputFile name="file" accept="image/*" />
       <div className={styles.form__msg} />
-      <Input name="country" type="text" options={countries} placeholder="Country" defaultValue={savedData.country} />
+      <Input name="country" type="text" options={countries} placeholder="Country" defaultValue={curData.country} />
       <div className={styles.form__btns}>
         <button type="submit" className="button" disabled={!isFormValid()}>
           Submit

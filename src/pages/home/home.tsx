@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { routes } from '~/pages';
@@ -13,27 +13,32 @@ const noImgSrc = '/image-broken.svg';
 let timer: ReturnType<typeof setTimeout> | null = null;
 
 export function PageHome() {
-  const { data, newData } = useSelector((state: TRootState) => state.form);
+  const { curData, allData } = useSelector((state: TRootState) => state.form);
+  const [newData, setNewData] = useState<AppFormData>(curData);
   const dispatch = useDispatch<TAppDispatch>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => dispatch(formUpdate(newData)), 4000);
+    const data = allData.length && allData[allData.length - 1];
+    if (data) {
+      setNewData(data);
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => dispatch(formUpdate(data)), 4000);
+    }
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [dispatch, newData]);
+  }, [dispatch, allData]);
 
   const getElement = (key: string, value?: string | number | boolean) => {
     if (key === 'accept') return value ? '\u2714' : '\u274C';
     return value;
   };
 
-  const getTableRows = () => {
-    const length = Object.keys(newData).length;
-    const value = newData.picture;
-    const isNew = data.picture !== value;
+  const getTableRows = (data: AppFormData, markNew = false) => {
+    const length = Object.keys(data).length;
+    const value = data.picture;
+    const isNew = markNew && curData.picture !== value;
     const rows = [
       <tr key="picture">
         <td></td>
@@ -43,9 +48,9 @@ export function PageHome() {
         </td>
       </tr>,
     ];
-    Object.keys(newData).map(key => {
-      const value = newData[key as keyof AppFormData];
-      const isNew = data[key as keyof AppFormData] !== value;
+    Object.keys(data).map(key => {
+      const value = data[key as keyof AppFormData];
+      const isNew = markNew && curData[key as keyof AppFormData] !== value;
       if (key === 'picture' || value === undefined) return null;
       rows.push(
         <tr key={key}>
@@ -81,9 +86,29 @@ export function PageHome() {
               <td>picture</td>
             </tr>
           </thead>
-          <tbody className={styles.table__body}>{getTableRows()}</tbody>
+          <tbody className={styles.table__body}>{getTableRows(newData, true)}</tbody>
         </table>
       </div>
+      {allData.length > 0 && (
+        <details>
+          <summary className={styles.header} style={{ cursor: 'pointer' }}>{`Requests (${allData.length})`}</summary>
+          {allData.reduceRight<React.ReactNode[]>((acc, curr, i) => {
+            acc.push(
+              <table key={i}>
+                <thead className={styles.table__header}>
+                  <tr>
+                    <td>field</td>
+                    <td>value</td>
+                    <td>picture</td>
+                  </tr>
+                </thead>
+                <tbody className={styles.table__body}>{getTableRows(curr)}</tbody>
+              </table>
+            );
+            return acc;
+          }, [])}
+        </details>
+      )}
     </>
   );
 }

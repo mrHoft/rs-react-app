@@ -13,8 +13,8 @@ export interface AppFormData {
 }
 
 interface FormState {
-  data: AppFormData;
-  newData: AppFormData;
+  curData: AppFormData;
+  allData: AppFormData[];
   countries: string[];
   genders: string[];
 }
@@ -27,8 +27,8 @@ const defaultData: AppFormData = {
 };
 
 const initialState: FormState = {
-  data: defaultData,
-  newData: defaultData,
+  curData: defaultData,
+  allData: [],
   countries,
   genders,
 };
@@ -38,10 +38,10 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     formUpdate: (state, action: PayloadAction<AppFormData>) => {
-      state.data = action.payload;
+      state.curData = action.payload;
     },
     formAdd: (state, action: PayloadAction<AppFormData>) => {
-      state.newData = action.payload;
+      state.allData.push(action.payload);
     },
   },
 });

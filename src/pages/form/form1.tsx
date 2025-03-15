@@ -22,7 +22,7 @@ export function PageForm1() {
     passwordConfirm: null,
     accept: null,
   });
-  const { data: savedData, countries, genders } = useSelector((state: TRootState) => state.form);
+  const { curData, countries, genders } = useSelector((state: TRootState) => state.form);
   const navigate = useNavigate();
   const dispatch = useDispatch<TAppDispatch>();
 
@@ -87,13 +87,13 @@ export function PageForm1() {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h2>Uncontrolled form</h2>
-      <Input name="name" type="text" placeholder="Name*" defaultValue={savedData.name} onBlur={handleChange('name')} />
+      <Input name="name" type="text" placeholder="Name*" defaultValue={curData.name} onBlur={handleChange('name')} />
       <div className={styles.form__msg}>{validation.name}</div>
       <Input
         name="age"
         type="number"
         placeholder="Age"
-        defaultValue={savedData.age || undefined}
+        defaultValue={curData.age || undefined}
         onBlur={handleChange('age')}
       />
       <div className={styles.form__msg}>{validation.age}</div>
@@ -101,7 +101,7 @@ export function PageForm1() {
         name="email"
         type="email"
         placeholder="Email*"
-        defaultValue={savedData.email}
+        defaultValue={curData.email}
         onBlur={handleChange('email')}
       />
       <div className={styles.form__msg}>{validation.email}</div>
@@ -110,19 +110,19 @@ export function PageForm1() {
           name="password"
           type="text"
           placeholder="Password*"
-          defaultValue={savedData.password}
+          defaultValue={curData.password}
           onBlur={handleChange('password')}
         />
         <Input
           name="passwordConfirm"
           type="text"
           placeholder="Password repeat*"
-          defaultValue={savedData.password}
+          defaultValue={curData.password}
           onChange={handlePasswordRepeat}
         />
       </div>
       <div className={styles.form__msg}>{validation.password}</div>
-      <Select name="gender" placeholder="Gender" options={genders} defaultValue={savedData.gender} />
+      <Select name="gender" placeholder="Gender" options={genders} defaultValue={curData.gender} />
       <div className={styles.form__msg} />
       <div>
         <input type="checkbox" name="accept" id="accept" onChange={e => handleChange('accept')(e.target.checked)} />
@@ -131,7 +131,7 @@ export function PageForm1() {
       <div className={styles.form__msg}>{validation.accept}</div>
       <InputFile name="file" accept="image/*" />
       <div className={styles.form__msg} />
-      <Input name="country" type="text" options={countries} placeholder="Country" defaultValue={savedData.country} />
+      <Input name="country" type="text" options={countries} placeholder="Country" defaultValue={curData.country} />
       <div className={styles.form__btns}>
         <button type="submit" className="button" disabled={!valid}>
           Submit
