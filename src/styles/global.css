@@ -15,23 +15,39 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 480px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  height: 100dvh;
   color: var(--color100);
   background-color: var(--color00);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root {
+  height: 100%;
+}
+
+.main {
+  position: relative;
+  height: calc(100% - 6.5rem);
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  overflow-y: auto;
 }
 
 button:focus,
-input:focus:focus {
+select:focus,
+input:focus,
+a:focus {
   outline: none;
 }
 
@@ -50,12 +66,14 @@ a:hover {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: var(--color20);
-  cursor: pointer;
   transition:
     background-color 0.25s linear,
     border-color 0.25s linear;
 
-  &:hover {
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+  &:hover:not(:disabled) {
     background-color: var(--color30);
     border-color: var(--color50);
   }

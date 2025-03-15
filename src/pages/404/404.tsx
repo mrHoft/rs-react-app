@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import styles from './404.module.css';
 
-const Page404: React.FC = () => {
+export const Page404: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -20,5 +20,3 @@ const Page404: React.FC = () => {
     </div>
   );
 };
-
-export default Page404;
