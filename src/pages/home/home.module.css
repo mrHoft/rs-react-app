@@ -1,0 +1,22 @@
+.header {
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.table {
+  margin-top: 1rem;
+}
+
+.table__header {
+  background-color: var(--color30);
+}
+.table__header th {
+  padding: 0 1rem;
+  text-align: center;
+}

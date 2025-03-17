@@ -38,9 +38,3 @@
     --link-color-hover: #4c9ce2;
   }
 }
-
-@media (max-width: 480px) {
-  :root {
-    font-size: 12px;
-  }
-}
