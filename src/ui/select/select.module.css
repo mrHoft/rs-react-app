@@ -1,7 +1,7 @@
 .select {
-  flex: 1 1 40%;
+  flex: 0 1 40%;
   position: relative;
-  min-width: 12em;
+  min-width: 12rem;
   box-sizing: border-box;
   padding: 0 0.6rem;
   border: 2px solid var(--color50);

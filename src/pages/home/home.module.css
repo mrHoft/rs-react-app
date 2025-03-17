@@ -17,6 +17,15 @@
   background-color: var(--color30);
 }
 .table__header th {
-  padding: 0 1rem;
+  position: relative;
+  padding: 0 1.5rem;
   text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.order {
+  position: absolute;
+  top: 0;
+  right: 0.5rem;
 }

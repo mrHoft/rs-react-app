@@ -1,7 +1,7 @@
 export interface CountryInfo {
   altSpellings: string[];
   area: number;
-  capital: string[];
+  capital?: string[];
   capitalInfo: { latlng: number[] };
   car: { signs: string[]; side: 'left' | 'right' };
   continents: string[];
