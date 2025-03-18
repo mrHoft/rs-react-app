@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CountryInfo } from '~/api/types';
 import { Search } from '~/ui/search/search';
 import { Select } from '~/ui/select/select';
-import { CountryRow } from './country/country';
+import { MemoizedCountryRow } from './country/country';
 
 import styles from './home.module.css';
 
@@ -16,17 +16,20 @@ function getCountryData() {
 
 export function PageHome() {
   const [countries, setCountries] = useState<CountryInfo[]>([]);
-  const [sorted, setSorted] = useState<CountryInfo[]>([]);
   const [regionOptions, setRegionOptions] = useState<string[]>([]);
   const [region, setRegion] = useState<string>('All');
   const [sorting, setSorting] = useState<{ field: TSortingField; order: number }>({ field: 'name', order: 1 });
   const [search, setSearch] = useState('');
 
-  const updateSorted = (data: CountryInfo[]) => {
-    let filtered = search !== '' ? data.filter(c => c.name.official.toLowerCase().includes(search)) : data;
-    if (region !== 'All') filtered = filtered.filter(c => c.region === region);
+  const filtered = useMemo(() => {
+    let data = search !== '' ? countries.filter(c => c.name.official.toLowerCase().includes(search)) : countries;
+    if (region !== 'All') data = data.filter(c => c.region === region);
+    return data;
+  }, [search, region, countries]);
+
+  const sorted = useMemo(() => {
     const { field, order } = sorting;
-    filtered = filtered.sort((a, b) => {
+    return filtered.sort((a, b) => {
       switch (field) {
         case 'name':
           return a.name.official > b.name.official ? order : -order;
@@ -41,12 +44,7 @@ export function PageHome() {
           return 0;
       }
     });
-    setSorted(filtered);
-  };
-
-  useEffect(() => {
-    updateSorted(countries);
-  }, [search, region, sorting, countries]);
+  }, [filtered, sorting]);
 
   useEffect(() => {
     getCountryData().then(data => {
@@ -55,12 +53,15 @@ export function PageHome() {
     });
   }, []);
 
-  const getDirection = (field: string) => {
-    if (sorting.field === field) {
-      return <span className={styles.order}>{sorting.order === -1 ? '▲' : '▼'}</span>;
-    }
-    return null;
-  };
+  const getDirection = useCallback(
+    (field: string) => {
+      if (sorting.field === field) {
+        return <span className={styles.order}>{sorting.order === -1 ? '▲' : '▼'}</span>;
+      }
+      return null;
+    },
+    [sorting]
+  );
 
   const handleSwitchSorting = (field: TSortingField) => () =>
     setSorting(prev => ({ field, order: field === prev.field ? prev.order * -1 : prev.order }));
@@ -85,7 +86,7 @@ export function PageHome() {
         </thead>
         <tbody>
           {sorted.map((country, i) => (
-            <CountryRow key={i} country={country} />
+            <MemoizedCountryRow key={i} country={country} />
           ))}
         </tbody>
       </table>

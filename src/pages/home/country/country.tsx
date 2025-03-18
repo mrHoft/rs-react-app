@@ -1,6 +1,8 @@
+import React from 'react';
+
 import type { CountryInfo } from '~/api/types';
 
-export function CountryRow({ country }: { country: CountryInfo }) {
+function CountryRow({ country }: { country: CountryInfo }) {
   return (
     <tr>
       <td>
@@ -13,3 +15,8 @@ export function CountryRow({ country }: { country: CountryInfo }) {
     </tr>
   );
 }
+
+export const MemoizedCountryRow = React.memo(
+  CountryRow,
+  (prev, cur) => prev.country.name.official === cur.country.name.official
+);
