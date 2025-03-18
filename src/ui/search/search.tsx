@@ -2,16 +2,20 @@ import React from 'react';
 
 import styles from './search.module.css';
 
-export function Search({ placeholder }: { placeholder: string }) {
+export function Search({ placeholder, onChange }: { placeholder: string; onChange?: (value: string) => void }) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const value = String(form.get('query'));
-    console.log(value);
+    if (onChange) onChange(value.toLowerCase());
+  };
+
+  const handleReset = () => {
+    if (onChange) onChange('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.search} onClick={e => e.stopPropagation()}>
+    <form onSubmit={handleSubmit} onReset={handleReset} className={styles.search} onClick={e => e.stopPropagation()}>
       <div className={styles.search__field}>
         <input type="text" name="query" placeholder=" " autoComplete="off" className={styles.search__input} />
         <button type="reset" className={styles.search__clear} />

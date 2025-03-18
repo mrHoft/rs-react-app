@@ -4,6 +4,7 @@ export interface CountryInfo {
   capital?: string[];
   capitalInfo: { latlng: number[] };
   car: { signs: string[]; side: 'left' | 'right' };
+  cca2: string;
   continents: string[];
   currencies: { SHP: { name: string; symbol: string } };
   demonyms: { eng: { f: string; m: string } };

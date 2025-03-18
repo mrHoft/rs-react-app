@@ -33,6 +33,7 @@ body {
 }
 
 .main {
+  margin: 1rem;
   position: relative;
   z-index: 1;
   overflow-y: auto;

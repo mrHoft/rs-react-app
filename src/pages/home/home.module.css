@@ -9,8 +9,9 @@
   flex-wrap: wrap;
 }
 
-.table {
+.total {
   margin-top: 1rem;
+  text-align: right;
 }
 
 .table__header {
