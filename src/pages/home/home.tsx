@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import apiRequest from '~/api/request';
 import type { CountryInfo } from '~/api/types';
+import { Loader } from '~/ui/loader/loader';
 import { Search } from '~/ui/search/search';
 import { Select } from '~/ui/select/select';
 import { MemoizedCountryRow } from './country/country';
@@ -8,18 +10,14 @@ import styles from './home.module.css';
 
 type TSortingField = 'name' | 'population' | 'region' | 'capital' | null;
 
-function getCountryData() {
-  return fetch('/countries.json')
-    .then(response => response.json())
-    .then(data => data as CountryInfo[]);
-}
-
 export function PageHome() {
   const [countries, setCountries] = useState<CountryInfo[]>([]);
   const [regionOptions, setRegionOptions] = useState<string[]>([]);
   const [region, setRegion] = useState<string>('All');
   const [sorting, setSorting] = useState<{ field: TSortingField; order: number }>({ field: 'name', order: 1 });
   const [search, setSearch] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  console.log(countries.length);
 
   const filtered = useMemo(() => {
     let data = search !== '' ? countries.filter(c => c.name.official.toLowerCase().includes(search)) : countries;
@@ -47,10 +45,19 @@ export function PageHome() {
   }, [filtered, sorting]);
 
   useEffect(() => {
-    getCountryData().then(data => {
-      setCountries(data);
-      setRegionOptions(['All', ...new Set(data.map(c => c.region))]);
-    });
+    Loader.show();
+    apiRequest
+      .all()
+      .then(({ data, error }) => {
+        if (error) {
+          setError(error.message);
+        }
+        if (data) {
+          setCountries(data);
+          setRegionOptions(['All', ...new Set(data.map(c => c.region))]);
+        }
+      })
+      .finally(Loader.hide);
   }, []);
 
   const getDirection = useCallback(
@@ -65,6 +72,8 @@ export function PageHome() {
 
   const handleSwitchSorting = (field: TSortingField) => () =>
     setSorting(prev => ({ field, order: field === prev.field ? prev.order * -1 : prev.order }));
+
+  if (error) return <h2>{error}</h2>;
 
   return (
     <>

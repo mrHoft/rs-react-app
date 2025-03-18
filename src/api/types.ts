@@ -9,7 +9,7 @@ export interface CountryInfo {
   currencies: { SHP: { name: string; symbol: string } };
   demonyms: { eng: { f: string; m: string } };
   flags: { png: string; svg: string };
-  idd: { root: '+5'; suffixes: string[] };
+  idd: { root: string; suffixes: string[] };
   independent: boolean;
   landlocked: boolean;
   languages: { eng: string };
@@ -22,4 +22,9 @@ export interface CountryInfo {
   status: 'officially-assigned' | 'unofficially-assigned';
   timezones: string[];
   tld: string[];
+}
+
+export interface TResponse<T> {
+  data?: T;
+  error?: { message: string; name: string; status: number };
 }

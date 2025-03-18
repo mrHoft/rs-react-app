@@ -1,5 +1,6 @@
 import { Backdop } from '~/ui/backdop/backdop';
 import { PageHome } from './pages/home/home';
+import { Loader } from './ui/loader/loader';
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <main className="main">
         <PageHome />
       </main>
+      <Loader />
     </>
   );
 }
