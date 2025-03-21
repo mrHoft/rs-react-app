@@ -1,0 +1,32 @@
+.header {
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.total {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.table__header {
+  background-color: var(--color30);
+}
+.table__header th {
+  position: relative;
+  padding: 0 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.order {
+  position: absolute;
+  top: 0;
+  right: 0.5rem;
+}

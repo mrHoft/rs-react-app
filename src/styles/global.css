@@ -6,8 +6,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--color100);
+  background-color: var(--color10);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,14 +15,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 640px) {
+  :root {
+    font-size: 12px;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    font-size: 10px;
+  }
+}
+
+#root {
+  position: relative;
+  min-height: 100dvh;
+}
+
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
-  color: var(--color100);
-  background-color: var(--color00);
+}
+
+.main {
+  margin: 1rem;
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
 }
 
 h1 {
@@ -31,7 +50,8 @@ h1 {
 }
 
 button:focus,
-input:focus:focus {
+input:focus,
+select:focus {
   outline: none;
 }
 

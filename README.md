@@ -1,54 +1,25 @@
-# React + TypeScript + Vite
+# Countries
+## Performance Profiling
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. **Initial Profiling with React Dev Tools Profiler**
 
-Currently, two official plugins are available:
+- Actions: filter by Europe, then sort by population
+- Render: 15.3ms
+- Layout effects: 0.1ms
+- Passive effects: 0.1ms
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<img src="public/profiling/initial_graph.png" alt="initial_graph">
 
-## Expanding the ESLint configuration
+<img src="public/profiling/initial_chart.png" alt="initial_chart">
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+2. **Updated with  React.memo and useMemo**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Actions: filter by Europe, then sort by population
+- Render: 3.6ms
+- Layout effects: 0.1ms
+- Passive effects: 0.1ms
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+<img src="public/profiling/updated_graph.png" alt="updated_graph">
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+<img src="public/profiling/updated_chart.png" alt="updated_chart">

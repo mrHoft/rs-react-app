@@ -1,0 +1,13 @@
+.table__row:hover td,
+.table__row_visited:hover td {
+  background-color: var(--color20);
+  user-select: none;
+}
+
+.table__row_visited td {
+  color: var(--link-color);
+}
+
+.table__flag {
+  text-align: center;
+}
