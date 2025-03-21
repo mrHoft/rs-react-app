@@ -1,17 +1,26 @@
 import React from 'react';
 import type { CountryInfo } from '~/api/types';
 import { Modal } from '~/ui/modal/modal';
+import Storage from '~/utils/storage';
 import { CountryCard } from './card';
 
 import styles from './row.module.css';
 
+const storage = new Storage();
+
 function CountryRow({ country }: { country: CountryInfo }) {
-  const handleClick = () => {
+  const [visited, setVisited] = React.useState(() => storage.get<boolean>(country.cca2));
+
+  const handleClick = React.useCallback(() => {
+    if (!visited) {
+      setVisited(true);
+      storage.set(country.cca2, true);
+    }
     Modal.show(<CountryCard country={country} />);
-  };
+  }, [visited, country]);
 
   return (
-    <tr className={styles.table__row} onClick={handleClick}>
+    <tr className={visited ? styles.table__row_visited : styles.table__row} onClick={handleClick}>
       <td className={styles.table__flag}>
         <img height={24} src={country.flags.svg} alt={country.cca2} />
       </td>

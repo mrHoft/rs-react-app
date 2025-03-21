@@ -17,7 +17,6 @@ export function PageHome() {
   const [sorting, setSorting] = useState<{ field: TSortingField; order: number }>({ field: 'name', order: 1 });
   const [search, setSearch] = useState('');
   const [error, setError] = useState<string | null>(null);
-  console.log(countries.length);
 
   const filtered = useMemo(() => {
     let data = search !== '' ? countries.filter(c => c.name.official.toLowerCase().includes(search)) : countries;
