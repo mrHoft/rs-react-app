@@ -15,9 +15,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   :root {
     font-size: 12px;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    font-size: 10px;
   }
 }
 

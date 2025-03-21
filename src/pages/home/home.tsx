@@ -4,7 +4,7 @@ import type { CountryInfo } from '~/api/types';
 import { Loader } from '~/ui/loader/loader';
 import { Search } from '~/ui/search/search';
 import { Select } from '~/ui/select/select';
-import { MemoizedCountryRow } from './country/country';
+import { MemoizedCountryRow } from './country/row';
 
 import styles from './home.module.css';
 

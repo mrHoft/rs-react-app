@@ -6,13 +6,13 @@ export interface CountryInfo {
   car: { signs: string[]; side: 'left' | 'right' };
   cca2: string;
   continents: string[];
-  currencies: { SHP: { name: string; symbol: string } };
+  currencies: Record<string, { name: string; symbol: string }>;
   demonyms: { eng: { f: string; m: string } };
   flags: { png: string; svg: string };
   idd: { root: string; suffixes: string[] };
   independent: boolean;
   landlocked: boolean;
-  languages: { eng: string };
+  languages: Record<string, string>;
   latlng: number[];
   maps: { googleMaps: string; openStreetMaps: string };
   name: { common: string; official: string; nativeName: { eng: string } };

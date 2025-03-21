@@ -1,0 +1,11 @@
+.card__header {
+  margin-top: 0;
+}
+
+.card__details {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+  margin: 1rem 0;
+}

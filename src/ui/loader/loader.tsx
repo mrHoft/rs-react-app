@@ -7,14 +7,17 @@ interface LoaderComponent {
   hide: () => void;
   (): React.ReactNode;
 }
+type TVisibleSetter = React.Dispatch<React.SetStateAction<boolean>>;
+
 export const Loader: LoaderComponent = (() => {
-  const state: {
-    set: React.Dispatch<React.SetStateAction<boolean>> | null;
-  } = { set: null };
+  const holder: {
+    setVisible: TVisibleSetter | null;
+    register: (setter: TVisibleSetter) => void;
+  } = { setVisible: null, register: (setter: TVisibleSetter) => (holder.setVisible = setter) };
 
   const Container = () => {
     const [visible, setVisible] = React.useState(false);
-    state.set = setVisible;
+    holder.register(setVisible);
 
     return visible ? (
       <div className={styles.loader}>
@@ -24,11 +27,11 @@ export const Loader: LoaderComponent = (() => {
   };
 
   Container.show = () => {
-    if (state.set) state.set(true);
+    if (holder.setVisible) holder.setVisible(true);
   };
 
   Container.hide = () => {
-    if (state.set) state.set(false);
+    if (holder.setVisible) holder.setVisible(false);
   };
 
   return Container;

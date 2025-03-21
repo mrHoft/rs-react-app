@@ -1,11 +1,18 @@
 import React from 'react';
-
 import type { CountryInfo } from '~/api/types';
+import { Modal } from '~/ui/modal/modal';
+import { CountryCard } from './card';
+
+import styles from './row.module.css';
 
 function CountryRow({ country }: { country: CountryInfo }) {
+  const handleClick = () => {
+    Modal.show(<CountryCard country={country} />);
+  };
+
   return (
-    <tr>
-      <td>
+    <tr className={styles.table__row} onClick={handleClick}>
+      <td className={styles.table__flag}>
         <img height={24} src={country.flags.svg} alt={country.cca2} />
       </td>
       <td>{country.name.official}</td>

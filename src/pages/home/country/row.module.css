@@ -1,0 +1,7 @@
+.table__row:hover td {
+  background-color: var(--color20);
+}
+
+.table__flag {
+  text-align: center;
+}
