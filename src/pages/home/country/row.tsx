@@ -2,7 +2,7 @@ import React from 'react';
 import type { CountryInfo } from '~/api/types';
 import { Modal } from '~/ui/modal/modal';
 import Storage from '~/utils/storage';
-import { CountryCard } from './card';
+import { MemoizedCountryCard } from './card';
 
 import styles from './row.module.css';
 
@@ -16,7 +16,7 @@ function CountryRow({ country }: { country: CountryInfo }) {
       setVisited(true);
       storage.set(country.cca2, true);
     }
-    Modal.show(<CountryCard country={country} />);
+    Modal.show(<MemoizedCountryCard country={country} />);
   }, [visited, country]);
 
   return (
@@ -32,7 +32,4 @@ function CountryRow({ country }: { country: CountryInfo }) {
   );
 }
 
-export const MemoizedCountryRow = React.memo(
-  CountryRow,
-  (prev, cur) => prev.country.name.official === cur.country.name.official
-);
+export const MemoizedCountryRow = React.memo(CountryRow, (prev, cur) => prev.country.cca2 === cur.country.cca2);

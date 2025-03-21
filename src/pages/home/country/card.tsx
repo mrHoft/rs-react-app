@@ -1,8 +1,9 @@
+import React from 'react';
 import type { CountryInfo } from '~/api/types';
 
 import styles from './card.module.css';
 
-export function CountryCard({ country }: { country: CountryInfo }) {
+function CountryCard({ country }: { country: CountryInfo }) {
   return (
     <>
       <h3 className={styles.card__header}>{country.name.official}</h3>
@@ -34,3 +35,5 @@ export function CountryCard({ country }: { country: CountryInfo }) {
     </>
   );
 }
+
+export const MemoizedCountryCard = React.memo(CountryCard, (prev, cur) => prev.country.cca2 === cur.country.cca2);
